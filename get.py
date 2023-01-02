@@ -5,9 +5,9 @@ from requests.sessions import Session
 from collections import OrderedDict
 from urllib3.util.ssl_ import create_urllib3_context, DEFAULT_CIPHERS
 
-URL = "https://transunion.com/"
+URL = "https://www.transunion.com/"
 
-DEFAULT_CIPHERS += ":!ECDHE+SHA:!AES128-SHA:!AESCCM:!DHE:!ARIA"
+DEFAULT_CIPHERS = "ECDHE+AESGCM:ECDHE+CHACHA20:DHE+AESGCM:DHE+CHACHA20:ECDH+AESGCM:DH+AESGCM:ECDH+AES:DH+AES:RSA+AESGCM:RSA+AES:!aNULL:!eNULL:!MD5:!DSS:!ECDHE+SHA:!AES128-SHA:!AESCCM:!DHE:!ARIA"
 
 DEFAULT_HEADERS = OrderedDict(
     (
