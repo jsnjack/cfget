@@ -31,22 +31,16 @@ class CFAdapter(HTTPAdapter):
     def get_connection(self, *args, **kwargs):
         conn = super(CFAdapter, self).get_connection(*args, **kwargs)
 
-        if conn.conn_kw.get("ssl_context"):
-            conn.conn_kw["ssl_context"].set_ciphers(DEFAULT_CIPHERS)
-        else:
-            context = create_urllib3_context(ciphers=DEFAULT_CIPHERS)
-            conn.conn_kw["ssl_context"] = context
+        context = create_urllib3_context(ciphers=DEFAULT_CIPHERS)
+        conn.conn_kw["ssl_context"] = context
 
         return conn
 
 
 def main():
-    headers = OrderedDict(DEFAULT_HEADERS)
     session = Session()
-    session.headers = headers
-    session.org_method = None
     session.mount("https://", CFAdapter())
-    resp = session.get(URL)
+    resp = session.get(URL, headers=DEFAULT_HEADERS)
     print(resp.status_code, len(resp.content))
 
     resp = requests.get(URL, headers={"User-Agent": "any"})
